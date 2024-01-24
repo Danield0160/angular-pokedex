@@ -8,11 +8,12 @@ import { PokemonService } from '../pokemon.service';
     <input type="text" class="form-control" placeholder="Buscar Pokémon..."
       (keyup.enter)="searchTag()"
       #txtTagInput>
-  `
+  `,
+  providers:[PokemonService]
 })
 export class SearchSidebarComponent {
   searchTag() {
-    throw new Error('Method not implemented.');
+    console.log(new PokemonService().prueba());
   }
 
 }

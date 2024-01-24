@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+let api_all_pokemon = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1305";
+let someObj:Object;
 
 @Injectable({
   providedIn: 'root'
@@ -7,16 +9,25 @@ import { Injectable } from '@angular/core';
 
 export class PokemonService {
 
-  private _taghistory: string[] = [];
+  private _listado_pokemon: string[] = [];
 
   constructor() { }
 
-  get tagHistory(){
-    return[...this._taghistory];
+  get listado_pokemon(){
+    return[...this._listado_pokemon];
   }
 
-  searchTag(tag:string):void {
-    this._taghistory.unshift(tag);
+  async cargar(){
+    let datos
+    await fetch(api_all_pokemon).then(response => response.json()).then(data => datos = data.results)
+
+    console.log(datos![0]["name"])
+  }
+
+  prueba(){
+    if (!this.listado_pokemon.length){
+      this.cargar()
+    }
   }
 
 }

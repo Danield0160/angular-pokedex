@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
 
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class PokemonService {
 
-  private __taghistory:string[] = [];
+  private _taghistory: string[] = [];
 
   constructor() { }
 
   get tagHistory(){
-    return[...this.__taghistory];
+    return[...this._taghistory];
   }
 
-  searchTag(tag:string){
+  searchTag(tag:string):void {
+    this._taghistory.unshift(tag);
+  }
 
 }
+

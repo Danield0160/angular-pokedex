@@ -1,10 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+body>*{
+  height: 98.4vh;
+}
+app-evolution-line{
+  display: block;
+  position: relative;
+  top: 50px;
+  width: 100%;
+}
 
 #pokedex_container{
   transform-style: preserve-3d;
-  transform: rotateX(35deg);
+  transform: rotateX(25deg);
   display: block;
   text-align: center;
+  margin-top: 80px;
 }
 #pokedex_right_side{
   background-color: red;
@@ -21,24 +31,26 @@
 }
 .pokedex_sides{
   display: inline-block;
-  height: 300px;
-  width: 150px;
+  height: 500px;
+  width: 250px;
   padding: 0;
   margin: 0;
   transform-style: preserve-3d;
   vertical-align: top;
 }
 #pokedex_pokeicon{
-  height: 50px;
-  width: 50px;
+  height: 150px;
+  width: 150px;
   background-color: white;
   margin: auto;
   position: relative;
   top: 50px;
   transform: translateZ(1px); /*para que no se vea por detras*/
+  border-radius: 10%;
 }
 #pokedex_pokeicon img{
   width: 100%;
+
 }
 .pokedex_poketext{
   width: 90px;
@@ -47,4 +59,14 @@
   margin-bottom: 15px;
   position: relative;
   top: 50px;
+}
+
+#pokedex_marco{
+    background-image: url("https://p4.wallpaperbetter.com/wallpaper/933/827/743/pokemon-pixel-art-wallpaper-preview.jpg");
+    width: 80%;
+    height: 80%;
+    margin: auto;
+    position: relative;
+    top: 15px;
+    background-size: cover;
 }

@@ -1,0 +1,12 @@
+#sidebar_container {
+    height: 98.4vh;
+}
+
+
+#pokedex_list {
+    background-color: blueviolet;
+}
+
+#pokedex_list img {
+    height: 50px;
+}

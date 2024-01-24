@@ -1,1 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
+
+#pokedex_container{
+  transform-style: preserve-3d;
+  transform: rotateX(35deg);
+  display: block;
+  text-align: center;
+}
+#pokedex_right_side{
+  background-color: red;
+}
+#pokedex_left_side{
+  background-color: blue;
+  transform: rotateY(0deg);
+  transform-origin: right;
+  transition: all 1s linear;
+}
+#pokedex_container:hover #pokedex_left_side{
+  transform: rotateY(179deg);
+  transition: all 1s linear;
+}
+.pokedex_sides{
+  display: inline-block;
+  height: 300px;
+  width: 150px;
+  padding: 0;
+  margin: 0;
+  transform-style: preserve-3d;
+  vertical-align: top;
+}
+#pokedex_pokeicon{
+  height: 50px;
+  width: 50px;
+  background-color: white;
+  margin: auto;
+  position: relative;
+  top: 50px;
+  transform: translateZ(1px); /*para que no se vea por detras*/
+}
+#pokedex_pokeicon img{
+  width: 100%;
+}
+.pokedex_poketext{
+  width: 90px;
+  background-color: white;
+  margin: auto;
+  margin-bottom: 15px;
+  position: relative;
+  top: 50px;
+}

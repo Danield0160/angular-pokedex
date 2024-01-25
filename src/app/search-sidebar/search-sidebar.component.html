@@ -1,5 +1,5 @@
 <div id="sidebar_container" class="col" style="background-color: black; color: white;">
-  <input class="form-control" list="pokedex_list" type="text" id="pokedex_search" placeholder="Search...">
+  <input class="form-control" list="pokedex_list" type="text" id="pokedex_search" placeholder="Buscar pokemon" (keyup.enter)="searchTag()" #txtTagInput>
   <!-- *ngFor="let pokemon of pokemons; index as i; first as isFirst"-->
   <!-- https://pokeapi.co/api/v2/pokemon/ditto -->
   <div id="pokedex_list">

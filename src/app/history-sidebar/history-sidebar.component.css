@@ -3,8 +3,9 @@
 }
 
 #container_historial {
-    height: 98.4vh;
+    height: 100vh;
     background-color: #2377af;
+    margin: 0;
 }
 
 h3 {

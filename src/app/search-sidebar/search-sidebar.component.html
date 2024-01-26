@@ -1,15 +1,12 @@
-<div id="sidebar_container" class="col" style="background-color: black; color: white;">
+<div id="sidebar_container" class="col">
   <input class="form-control" list="pokedex_list" type="text" id="pokedex_search" placeholder="Buscar pokemon" (keyup.enter)="searchTag()" #txtTagInput>
-  <!-- *ngFor="let pokemon of pokemons; index as i; first as isFirst"-->
-  <!-- https://pokeapi.co/api/v2/pokemon/ditto -->
+
   <div id="pokedex_list">
+    <!-- Ejemplo -->
     <div id="pokemon_id">
       <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png" alt="ditto">
       <span>Ditto</span>
     </div>
   </div>
-  <!--datalist id="pokedex_list">
-      <option value="Pikachu">
-    </datalist>
-    <p>Resultados</p-->
+
 </div>

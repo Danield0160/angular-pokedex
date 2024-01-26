@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 
 let api_all_pokemon = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1305";
+let api_base= "https://pokeapi.co/api/v2/"
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +14,15 @@ export class PokemonService {
 
   constructor(){
     this.cargar()
+    this.obtener_altura();
   }
-  
+
   async cargar(){
-    console.log("cargando datos")
-    const response = await fetch(api_all_pokemon);
-    const data = await response.json();
+    let response = await fetch(api_all_pokemon);
+    let data = await response.json();
     this.listado_pokemon = data.results;
   }
+  //https://pokeapi.co/api/v2/pokemon-species/{nombre-del-pokémon}
 
   obtener_todo(){
     return this.listado_pokemon
@@ -27,11 +30,28 @@ export class PokemonService {
 
   obtener_coincidencias_por_nombre(nombre:string){  }
 
-  obtener_sprite(id:Number){  }
+  async obtener_sprite(id:Number){
+    let response = await fetch(api_base+"pokemon/"+id)
+    let data = await response.json();
+    return data["sprites"]["front_default"]
+  }
+  async obtener_nombre(id:Number){
+    let response = await fetch(api_base+"pokemon/"+id)
+    let data = await response.json();
+    console.log(data["name"])
+    return data["name"]
+  }
 
   obtener_descripcion(id:number){  }
 
   obtener_habitat(id:number){  }
 
   obtener_tipos(id:number){  }
+
+  async obtener_altura(){
+    let response = await fetch(api_base+"pokemon/"+"ditto")
+    let data = await response.json();
+    console.log(data["species"])
+    return data["species"];
+  }
 }

@@ -1,10 +1,22 @@
 #sidebar_container {
     height: 98.4vh;
+    background-color: #2377af;
+    color: white;
+    padding: 10px;
 }
 
+#pokedex_search {
+    border: 3px solid orange;
+    border-radius: 5px;
+}
+
+#pokemon_id {
+    margin: 10px;
+}
 
 #pokedex_list {
     background-color: blueviolet;
+    border-radius: 5px;
 }
 
 #pokedex_list img {

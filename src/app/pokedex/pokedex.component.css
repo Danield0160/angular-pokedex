@@ -8,12 +8,21 @@
 }
 #pokedex_right_side{
   background-color: red;
+  padding: 1em;
+  border-top-right-radius: 15%;
+  border-bottom-right-radius: 15%;
+  border-top-left-radius: 7%;
+  border-bottom-left-radius: 7%;
 }
 #pokedex_left_side{
   background-color: blue;
   transform: rotateY(0deg);
   transform-origin: right;
   transition: all 1s linear;
+  border-top-left-radius: 15%;
+  border-bottom-left-radius: 15%;
+  border-top-right-radius: 7%;
+  border-bottom-right-radius: 7%;
 }
 #pokedex_container:hover #pokedex_left_side{
   transform: rotateY(179deg);
@@ -61,4 +70,9 @@
     background-size: cover;
 }
 
-
+#pokedex_id_pokemon, #pokedex_nombre_pokemon, #pokedex_especie_pokemon, #pokedex_tipo_pokemon, #pokedex_altura_pokemon, #pokedex_peso_pokemon {
+  width: 100%;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+}

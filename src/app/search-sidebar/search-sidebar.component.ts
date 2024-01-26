@@ -6,7 +6,7 @@ let pokeservice = new PokemonService()
 @Component({
   selector: 'app-search-sidebar',
   templateUrl: './search-sidebar.component.html',
-
+  styleUrls: ['./search-sidebar.component.css'],
   providers:[PokemonService]
 })
 
@@ -14,14 +14,7 @@ let pokeservice = new PokemonService()
 export class SearchSidebarComponent {
   searchTag() {
     let datos = pokeservice.obtener_todo()
-    console.log(datos);
+    // console.log(datos);
   }
 
 }
-
-
-  //   <h5>Buscar Pokémon:</h5>
-  //   <input type="text" class="form-control" placeholder="Buscar Pokémon..."
-  //     (keyup.enter)="searchTag()"
-  //     #txtTagInput>
-  // `,

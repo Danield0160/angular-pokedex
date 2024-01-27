@@ -13,18 +13,22 @@ export class PokemonService {
   private listado_pokemon:any = [];
 
   constructor(){
-    this.cargar()
-    this.obtener_altura();
+    this.__cargar()
   }
 
-  async cargar(){
+  async __cargar(){
+    if (this.listado_pokemon.length > 0){
+      return
+    }
     let response = await fetch(api_all_pokemon);
     let data = await response.json();
     this.listado_pokemon = data.results;
   }
   //https://pokeapi.co/api/v2/pokemon-species/{nombre-del-pokémon}
 
-  obtener_todo(){
+
+  async _obtener_todo(){
+    await this.__cargar()
     return this.listado_pokemon
   }
 
@@ -38,7 +42,7 @@ export class PokemonService {
   async obtener_nombre(id:Number){
     let response = await fetch(api_base+"pokemon/"+id)
     let data = await response.json();
-    console.log(data["name"])
+    // console.log(data["name"])
     return data["name"]
   }
 
@@ -51,7 +55,8 @@ export class PokemonService {
   async obtener_altura(){
     let response = await fetch(api_base+"pokemon/"+"ditto")
     let data = await response.json();
-    console.log(data["species"])
+    // console.log(data["species"])
     return data["species"];
   }
 }
+

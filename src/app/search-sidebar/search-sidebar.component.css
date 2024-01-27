@@ -1,5 +1,5 @@
 #sidebar_container {
-    height: 98.4vh;
+    height: 100vh;
     background-color: #2377af;
     color: white;
     padding: 10px;
@@ -10,15 +10,27 @@
     border-radius: 5px;
 }
 
-#pokemon_id {
+.pokemon_id {
     margin: 10px;
+    height: 60px;
+    border: 1px solid black;
+    text-align: right;
+    position: relative;
+    line-height: 30px;
+}
+.pokemon_id  > *{
+  pointer-events: none;
 }
 
 #pokedex_list {
     background-color: blueviolet;
     border-radius: 5px;
+    overflow-y: scroll;
+    height: 100vh;
 }
 
 #pokedex_list img {
     height: 50px;
+    position: absolute;
+    left: 0;
 }

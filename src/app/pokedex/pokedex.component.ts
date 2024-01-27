@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { PokemonService } from '../pokemon.service';
+
 let pokeservice= new PokemonService()
+
 @Component({
   selector: 'app-pokedex',
   templateUrl: './pokedex.component.html',

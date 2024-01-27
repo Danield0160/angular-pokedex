@@ -6,6 +6,7 @@ import { PokedexComponent } from './pokedex/pokedex.component';
 import { EvolutionLineComponent } from './evolution-line/evolution-line.component';
 import { HistorySidebarComponent } from './history-sidebar/history-sidebar.component';
 import { SearchSidebarComponent } from './search-sidebar/search-sidebar.component';
+import { PokemonService } from './pokemon.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { SearchSidebarComponent } from './search-sidebar/search-sidebar.componen
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [PokemonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

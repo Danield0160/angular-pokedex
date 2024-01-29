@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-let api_all_pokemon = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1305";
+let api_all_pokemon = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1025";
 let api_base= "https://pokeapi.co/api/v2/"
 
 

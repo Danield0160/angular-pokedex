@@ -20,7 +20,7 @@
 #pokedex_list {
   padding: 1em 2em 0 2em;
   overflow-y: scroll;
-  height: 100%;
+  height: 96%;
 }
 
 #pokedex_list > div {
@@ -32,22 +32,30 @@
 #pokedex_list img {
   height: 50px;
   float: left;
+  position: absolute;
+  left: 5px;
+  transform: scale(1.2);
 }
 
 .pokemon {
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 1em;
-  white-space: nowrap;
+  flex-direction: column;
+  position: relative;
 }
-
+.pokemon span{
+position: absolute;
+vertical-align: middle;
+}
 
 .search-sidebar_id_pokemon {
   background-color: #DC0A2D;
   color: white;
-  height: 50px;
-  width: 40%;
+  height: 20px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

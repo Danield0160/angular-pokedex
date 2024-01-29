@@ -26,15 +26,18 @@
 #pokedex_list > div {
   background-color: #F0F1F3;
   color: #183153;
-  border-radius: 5px;
+  border-radius: 50px;
+  overflow: hidden;
 }
 
 #pokedex_list img {
   height: 50px;
   float: left;
   position: absolute;
-  left: 5px;
+  left: 10px;
+  top: 20px;
   transform: scale(1.2);
+  z-index: 10;
 }
 
 .pokemon {
@@ -45,11 +48,55 @@
   margin-top: 1em;
   flex-direction: column;
   position: relative;
+  min-width: 150px;
+}
+.pokemon div{
+  pointer-events: none;
 }
 .pokemon span{
 position: absolute;
 vertical-align: middle;
+z-index: 10;
+top: 30px;
+right: 10px;
+text-shadow: 2px 2px white, -2px -2px white;
+font-weight: bold;
 }
+
+
+@media (max-width: 1200px) {
+  .pokemon span{
+    /* Estilos específicos para cuando el div tiene 400px de ancho o más */
+    display: none;
+    width: 0;
+  }
+
+  .pokemon {
+    min-width: 86px;
+    width: 100%;
+    text-align: center;
+  }
+.pokemon:hover img{
+  display: none;
+}
+.pokemon:hover span{
+  display: inline;
+  padding-left: 20px;
+  top: 18px;
+  width: 95%;
+  word-break: break-all;
+  vertical-align: middle;
+}
+
+  #pokedex_list img{
+    position: unset;
+  }
+
+
+}
+
+
+
 
 .search-sidebar_id_pokemon {
   background-color: #DC0A2D;
@@ -59,5 +106,6 @@ vertical-align: middle;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 0 5px 5px 0;
+  border-bottom: 3px solid black;
+  z-index: 11;
 }

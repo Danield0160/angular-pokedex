@@ -32,17 +32,24 @@ export class SearchSidebarComponent {
     for (const pokemon of datos) {
       i++
       let bloque = document.createElement("div")
-      bloque.className = "pokemon_id"
+      bloque.className = "pokemon"
       bloque.setAttribute("pokeid",String(i))
 
+      let seccion_izq = document.createElement("div")
       let imagen = document.createElement("img")
       pokeservice.obtener_sprite(i).then((dato)=>imagen.src = dato)
+      seccion_izq.appendChild(imagen)
+      bloque.appendChild(seccion_izq)
+
       let nombre = document.createElement("span")
       nombre.innerText = pokemon["name"]
+      seccion_izq.appendChild(nombre)
 
+      let seccion_der = document.createElement("div")
+      seccion_der.innerText = "Nº " + i
+      seccion_der.className = "search-sidebar_id_pokemon"
+      bloque.appendChild(seccion_der)
       listado?.appendChild(bloque)
-      bloque.appendChild(imagen)
-      bloque.appendChild(nombre)
       bloque.onclick = function(e:Event){pokedex.poner(( Number((e.target! as HTMLTextAreaElement).getAttribute("pokeid") )))}
 
     }

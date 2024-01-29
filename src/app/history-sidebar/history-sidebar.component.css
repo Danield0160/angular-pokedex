@@ -1,27 +1,37 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0;
 }
 
 #container_historial {
-    height: 100vh;
-    background-color: #2377af;
-    margin: 0;
+  height: 100vh;
+  background-color: #183153;
+  color: white;
+}
+
+#historial {
+  padding: 0.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 h3 {
-text-align: center;
-padding: 25px;
+  text-align: center;
+  height: 6vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #pokedex_button {
-    background-color: #f48b36;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: block;
-    font-size: 16px;
-    margin: 0 auto;
-    cursor: pointer;
+  margin-top: .1em;
+  background-color: #F0F1F3;
+  border: none;
+  color: #183153;
+  padding: 1em 2em;
+  display: block;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
 }

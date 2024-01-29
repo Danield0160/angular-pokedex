@@ -1,6 +1,13 @@
+* {
+  margin: 0;
+}
+
 div {
   width: 100%;
-  background-color: coral;
-  padding: 1em;
+  background-color: #183153;
+  color: white;
   border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

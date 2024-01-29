@@ -1,78 +1,78 @@
-
-#pokedex_container{
+#pokedex_container {
   transform-style: preserve-3d;
   transform: rotateX(25deg);
-  display: block;
-  text-align: center;
-  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-#pokedex_right_side{
-  background-color: red;
+#pokedex_right_side {
+  background-color: #DC0A2D;
   padding: 1em;
+  border-radius: 1em;
+  /*
   border-top-right-radius: 15%;
   border-bottom-right-radius: 15%;
   border-top-left-radius: 7%;
   border-bottom-left-radius: 7%;
+  */
 }
-#pokedex_left_side{
-  background-color: blue;
+#pokedex_left_side {
+  background-color: #DC0A2D;
   transform: rotateY(0deg);
   transform-origin: right;
   transition: all 1s linear;
+  border-radius: 1em;
+  /*
   border-top-left-radius: 15%;
   border-bottom-left-radius: 15%;
   border-top-right-radius: 7%;
   border-bottom-right-radius: 7%;
+  */
 }
-#pokedex_container:hover #pokedex_left_side{
+#pokedex_container:hover #pokedex_left_side {
   transform: rotateY(179deg);
   transition: all 1s linear;
 }
-.pokedex_sides{
+.pokedex_sides {
   display: inline-block;
   height: 500px;
   width: 250px;
-  padding: 0;
-  margin: 0;
   transform-style: preserve-3d;
   vertical-align: top;
 }
-#pokedex_pokeicon{
+#pokedex_pokeicon {
   height: 150px;
-  width: 150px;
-  background-color: white;
+  width: 70%;
   margin: auto;
   position: relative;
   top: 50px;
-  transform: translateZ(1px); /*para que no se vea por detras*/
+  transform: translateZ(1px); /*para que no se vea por detrás*/
   border-radius: 10%;
 }
-#pokedex_pokeicon img{
+#pokedex_pokeicon img {
   width: 100%;
-
+  border-radius: 10%;
 }
-.pokedex_poketext{
-  width: 90px;
-  background-color: white;
-  margin: auto;
-  margin-bottom: 15px;
-  position: relative;
-  top: 50px;
-}
-
-#pokedex_marco{
-    background-image: url("https://p4.wallpaperbetter.com/wallpaper/933/827/743/pokemon-pixel-art-wallpaper-preview.jpg");
-    width: 80%;
-    height: 80%;
-    margin: auto;
-    position: relative;
-    top: 15px;
-    background-size: cover;
-}
-
-#pokedex_id_pokemon, #pokedex_nombre_pokemon, #pokedex_especie_pokemon, #pokedex_tipo_pokemon, #pokedex_altura_pokemon, #pokedex_peso_pokemon {
+.pokedex_poketext {
   width: 100%;
   background-color: white;
   color: black;
   border-radius: 5px;
+  margin-top: 1em;
+}
+
+#pokedex_marco {
+  background-image: url("https://p4.wallpaperbetter.com/wallpaper/933/827/743/pokemon-pixel-art-wallpaper-preview.jpg");
+  margin: auto;
+  position: relative;
+  background-size: cover;
+  border-radius: 10%;
+}
+
+.pokedex_poketext {
+  font-weight: bold;
+  background-color: transparent;
+  color: white;
+  text-align: center;
+  background-color: rgb(2, 2, 78);
 }

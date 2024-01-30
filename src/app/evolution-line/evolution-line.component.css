@@ -2,7 +2,7 @@
   margin: 0;
 }
 
-div {
+#titulo {
   width: 100%;
   background-color: #183153;
   color: white;
@@ -10,4 +10,30 @@ div {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#container {
+  width: 100%;
+  height: 180px;
+  background-color: #183153;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+#container div {
+  width: 100px;
+  height: 100px;
+  background-color: white;
+  border-radius: 15px;
+  display: flex;
+
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
 }

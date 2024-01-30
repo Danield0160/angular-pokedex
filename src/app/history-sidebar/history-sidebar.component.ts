@@ -6,7 +6,6 @@ import { ViewEncapsulation } from '@angular/core';
   selector: 'app-history-sidebar',
   templateUrl: './history-sidebar.component.html',
   styleUrls: ['./history-sidebar.component.css'],
-  encapsulation: ViewEncapsulation.None
 
 })
 export class HistorySidebarComponent {

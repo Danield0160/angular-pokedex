@@ -3,20 +3,20 @@ import { PokemonService } from '../pokemon.service';
 import { PokedexComponent } from '../pokedex/pokedex.component';
 import { ViewEncapsulation } from '@angular/core';
 import { HistorySidebarService } from '../history-sidebar/history-sidebar.service';
+import { EvolutionLineComponent } from '../evolution-line/evolution-line.component';
 
 
 @Component({
   selector: 'app-search-sidebar',
   templateUrl: './search-sidebar.component.html',
   styleUrls: ['./search-sidebar.component.css'],
-  providers:[PokemonService,PokedexComponent],
+  providers:[PokemonService,PokedexComponent,EvolutionLineComponent],
   encapsulation: ViewEncapsulation.None
-
 })
 
 
 export class SearchSidebarComponent {
-  constructor(private historySidebarService: HistorySidebarService, private pokemonService: PokemonService, private pokedexComponent:PokedexComponent ) {
+  constructor(private historySidebarService: HistorySidebarService, private pokemonService: PokemonService, private pokedexComponent:PokedexComponent, private evolutionLineComponent:EvolutionLineComponent ) {
     this.pokemonService._obtener_todo().then((datos:any)=>this.rellenar_listado(datos))
   }
 
@@ -59,8 +59,9 @@ export class SearchSidebarComponent {
   searchTag(event:Event) {
     let entrada = (event.target as HTMLTextAreaElement).value;
     this.historySidebarService.searchTag(entrada);
-    (event.target as HTMLTextAreaElement).value = ""
-    this.pokedexComponent.poner(Number(entrada))
+    this.evolutionLineComponent.obtener_linea(entrada);
+    (event.target as HTMLTextAreaElement).value = "";
+    this.pokedexComponent.poner(Number(entrada));
   }
 
 }

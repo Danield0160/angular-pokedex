@@ -7,9 +7,10 @@
   margin-top: 40px;
 }
 #pokedex_right_side {
-  background-color: #DC0A2D;
+  background-image: url(../../pokedex-inside-right.jpg);
+  background-size: 100% 100%;
   padding: 1em;
-  border-radius: 1em;
+  /* border-radius: 1em; */
   /*
   border-top-right-radius: 15%;
   border-bottom-right-radius: 15%;
@@ -18,11 +19,12 @@
   */
 }
 #pokedex_left_side {
-  background-color: #DC0A2D;
+  background-image: url(../../pokedex-inside.jpg);
+  background-size: 100% 100%;
   transform: rotateY(0deg);
   transform-origin: right;
-  transition: all 1s linear;
-  border-radius: 1em;
+  transition: all 5s linear;
+  /* border-radius: 1em; */
   /*
   border-top-left-radius: 15%;
   border-bottom-left-radius: 15%;
@@ -30,9 +32,40 @@
   border-bottom-right-radius: 7%;
   */
 }
+
+#pokedex_trasera{
+  background-image: url(../../pokedex-outside.jpg);
+  background-size: 100% 100%;
+  position: absolute;
+  width: 100%;
+  transform: translateZ(-30px);
+  /* border-radius: 1em; */
+}
+#pokedex_trasera-1{
+  background-color: rgb(0, 0, 0);
+  background-size: 100% 100%;
+  position: absolute;
+  transform-origin: left;
+  bottom: 0;
+  width: 30px;
+  transform: rotateY(90deg);
+}
+#pokedex_trasera-2{
+  background-color: red;
+  background-size: 100% 100%;
+  position: absolute;
+  transform-origin: bottom right;
+  bottom: 0px;
+  left: -30px;
+  width: 30px;
+  height: 68%;
+  transform: rotateX(90deg) rotateZ(90deg) ;
+}
+
+
 #pokedex_container:hover #pokedex_left_side {
   transform: rotateY(179deg);
-  transition: all 1s linear;
+  transition: all 5s linear;
 }
 .pokedex_sides {
   display: inline-block;
@@ -47,13 +80,16 @@
   }
 }
 #pokedex_pokeicon {
-  height: 150px;
-  width: 70%;
+  height: 160x;
+  width: 38%;
+  min-width: 130px;
   margin: auto;
   position: relative;
-  top: 50px;
+  top: 100px;
+  left: 10px;
+  border: 7px solid #af2e2a;
   transform: translateZ(1px); /*para que no se vea por detrás*/
-  border-radius: 10%;
+  border-radius: 15%;
 }
 #pokedex_pokeicon img {
   width: 100%;
@@ -61,7 +97,8 @@
   image-rendering: pixelated;
 }
 .pokedex_poketext {
-  width: 100%;
+  margin: auto;
+  width: 70%;
   background-color: white;
   color: black;
   border-radius: 5px;

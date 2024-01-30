@@ -1,7 +1,12 @@
 <div id="container_historial" class="col">
-    <h3 >Historial</h3>
-    <div id="historial">
-      <button id="pokedex_button">Borrar el historial</button>
-    </div>
-    <hr>
+  <h3>Historial</h3>
+  <div id="historial">
+    <button id="pokedex_button" (click)="deleteTags()">Borrar el historial</button> <!-- botón para borrar el historial -->
+  </div>
+  <hr>
+  <div class="list-group list-reset">
+    <a href="#" *ngFor="let tag of tags" class="list-group-item list-group-item-action"> <!-- lista de búsquedas realizadas -->
+        {{tag | titlecase}}
+    </a>
+</div>
 </div>

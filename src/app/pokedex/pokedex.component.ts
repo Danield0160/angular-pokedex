@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { PokemonService } from '../pokemon.service';
 
-let pokeservice= new PokemonService()
 
 @Component({
   selector: 'app-pokedex',
@@ -9,7 +8,7 @@ let pokeservice= new PokemonService()
   styleUrls: ['./pokedex.component.css']
 })
 export class PokedexComponent {
-  constructor(){
+  constructor(private pokemonService:PokemonService){
     this.poner(1)
 
   }
@@ -20,16 +19,16 @@ export class PokedexComponent {
   }
 
   poner_icono(id:Number){
-    let respuesta = pokeservice.obtener_sprite(id)
+    let respuesta = this.pokemonService.obtener_sprite(id)
     respuesta.then((data)=> document.getElementById("icono")?.setAttribute("src",data))
   }
   poner_nombre(id:Number){
-    let respuesta = pokeservice.obtener_nombre(id)
+    let respuesta = this.pokemonService.obtener_nombre(id)
     respuesta.then((data)=> function(data:any){document.getElementById("pokedex_nombre_pokemon")!.innerText = data}(data))
   }
   poner_id(id:Number){
     function poner_texto(data:any){document.getElementById("pokedex_id_pokemon")!.innerText = data};
-    pokeservice.obtener_nombre(id).then((data)=> poner_texto(id))
+    this.pokemonService.obtener_nombre(id).then((data)=> poner_texto(id))
   }
 }
 

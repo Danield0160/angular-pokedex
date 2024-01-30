@@ -2,28 +2,27 @@ import { Component } from '@angular/core';
 import { PokemonService } from '../pokemon.service';
 import { PokedexComponent } from '../pokedex/pokedex.component';
 import { ViewEncapsulation } from '@angular/core';
+import { HistorySidebarService } from '../history-sidebar/history-sidebar.service';
 
-let pokeservice = new PokemonService()
-let pokedex = new PokedexComponent()
 
 @Component({
   selector: 'app-search-sidebar',
   templateUrl: './search-sidebar.component.html',
   styleUrls: ['./search-sidebar.component.css'],
-  providers:[PokemonService],
+  providers:[PokemonService,PokedexComponent],
   encapsulation: ViewEncapsulation.None
 
 })
 
 
 export class SearchSidebarComponent {
-  constructor(){
-    pokeservice._obtener_todo().then((datos:any)=>this.rellenar_listado(datos))
+  constructor(private historySidebarService: HistorySidebarService, private pokemonService: PokemonService, private pokedexComponent:PokedexComponent ) {
+    this.pokemonService._obtener_todo().then((datos:any)=>this.rellenar_listado(datos))
   }
 
 
   obtener(){
-    pokeservice._obtener_todo().then((datos:any)=>this.rellenar_listado(datos))
+    this.pokemonService._obtener_todo().then((datos:any)=>this.rellenar_listado(datos))
   }
 
   rellenar_listado(datos:any){
@@ -37,7 +36,7 @@ export class SearchSidebarComponent {
 
       let seccion_izq = document.createElement("div")
       let imagen = document.createElement("img")
-      pokeservice.obtener_sprite(i).then((dato)=>imagen.src = dato)
+      this.pokemonService.obtener_sprite(i).then((dato)=>imagen.src = dato)
       seccion_izq.appendChild(imagen)
 
       let nombre = document.createElement("span")
@@ -51,7 +50,7 @@ export class SearchSidebarComponent {
       listado?.appendChild(bloque)
       bloque.appendChild(seccion_izq)
 
-      bloque.onclick = function(e:Event){pokedex.poner(( Number((e.target! as HTMLTextAreaElement).getAttribute("pokeid") )))}
+      bloque.onclick = (e:Event) =>{this.pokedexComponent.poner(( Number((e.target! as HTMLTextAreaElement).getAttribute("pokeid") )))}
 
     }
   }
@@ -59,8 +58,9 @@ export class SearchSidebarComponent {
 
   searchTag(event:Event) {
     let entrada = (event.target as HTMLTextAreaElement).value;
+    this.historySidebarService.searchTag(entrada);
     (event.target as HTMLTextAreaElement).value = ""
-    pokedex.poner(Number(entrada))
+    this.pokedexComponent.poner(Number(entrada))
   }
 
 }

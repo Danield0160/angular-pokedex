@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { HistorySidebarService } from './history-sidebar.service';
+import { ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-history-sidebar',
   templateUrl: './history-sidebar.component.html',
-  styleUrls: ['./history-sidebar.component.css']
+  styleUrls: ['./history-sidebar.component.css'],
+  encapsulation: ViewEncapsulation.None
+
 })
 export class HistorySidebarComponent {
 

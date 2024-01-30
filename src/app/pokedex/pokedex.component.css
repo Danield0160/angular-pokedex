@@ -42,8 +42,8 @@
   /* border-radius: 1em; */
 }
 #pokedex_trasera-1{
-  background-color: rgb(0, 0, 0);
-  background-size: 100% 100%;
+  background-image: url(https://i.etsystatic.com/17405005/r/il/204090/4916576079/il_570xN.4916576079_6k1y.jpg);
+  background-size: 1000%;
   position: absolute;
   transform-origin: left;
   bottom: 0;
@@ -51,15 +51,16 @@
   transform: rotateY(90deg);
 }
 #pokedex_trasera-2{
-  background-color: red;
+  background-color: #db3c36;
   background-size: 100% 100%;
   position: absolute;
   transform-origin: bottom right;
   bottom: 0px;
   left: -30px;
   width: 30px;
-  height: 68%;
+  max-height: 25vw;
   transform: rotateX(90deg) rotateZ(90deg) ;
+  border: 10px solid #b12021;
 }
 
 
@@ -78,6 +79,7 @@
   .pokedex_sides{
     width: 45%;
   }
+
 }
 #pokedex_pokeicon {
   height: 160x;

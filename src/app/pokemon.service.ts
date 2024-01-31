@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 let api_all_pokemon = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1025";
 let api_base = "https://pokeapi.co/api/v2/"
 
@@ -7,11 +6,14 @@ let api_base = "https://pokeapi.co/api/v2/"
 @Injectable({
   providedIn: 'root'
 })
-
 export class PokemonService {
 
-  private listado_pokemon: any = [];
-  private cargado;
+  public listado_pokemon: any = [];
+  public cargado;
+
+  public pokemon: any = {}
+  private pokemon_species: any = {}
+
   constructor() {
     this.cargado = this.__cargar()
   }
@@ -23,51 +25,84 @@ export class PokemonService {
     let response = await fetch(api_all_pokemon);
     let data = await response.json();
     this.listado_pokemon = data.results;
+
   }
   //https://pokeapi.co/api/v2/pokemon-species/{nombre-del-pokémon}
 
 
   async _obtener_todo() {
     await this.cargado
+
     return this.listado_pokemon
   }
 
-  obtener_coincidencias_por_nombre(nombre: string) { }
+
+
+
+  async cargar_datos_pokemon(id: any) {
+    if (!this.pokemon[String(id)]) {
+      this.pokemon[String(id)] = fetch(api_base + "pokemon/" + id)
+      let temp = await this.pokemon[String(id)]
+      this.pokemon[String(id)] = await temp.json()
+    }
+    return await this.pokemon[String(id)]
+  }
+  async cargar_datos_pokemon_species(id: any) {
+    if (!this.pokemon_species[String(id)]) {
+      this.pokemon_species[String(id)] = await fetch(api_base + "pokemon-species/" + id)
+      let temp = this.pokemon_species[String(id)]
+      this.pokemon_species[String(id)] = await temp.json()
+    }
+    // console.log(await this.pokemon_species[String(id)])
+    return await this.pokemon_species[String(id)]
+  }
+
+
+
+
 
   async obtener_sprite(id: Number) {
-    let response = await fetch(api_base + "pokemon/" + id)
-    let data = await response.json();
-    return data["sprites"]["front_default"]
+    // let response = await fetch(api_base + "pokemon/" + id)
+    let data = await this.cargar_datos_pokemon(id)
+    return data!["sprites"]["front_default"]
   }
 
   async obtener_nombre(id: Number) {
-    let response = await fetch(api_base + "pokemon/" + id)
-    let data = await response.json();
+    // let response = await fetch(api_base + "pokemon/" + id)
+    let data = await this.cargar_datos_pokemon(id)
     return this.primeraAMayuscula(data["name"])
   }
 
+  private biomas: any = { "cave": "cueva", "forest": "bosque", "grassland": "pradera", "mountain": "montaña", "rare": "raro", "rough-terrain": "campo", "sea": "mar", "urban": "ciudad", "waters-edge": "agua salada" }
   async obtener_habitat(id: Number) {
-    let response = await fetch(api_base + "pokemon-species/" + id)
-    let data = await response.json();
-    let habitat = data["habitat"]["url"]
-    let habitat_id = habitat.split("/")[6]
-    let response2 = await fetch(api_base + "pokemon-habitat/" + habitat_id)
-    let data2 = await response2.json();
-    let habitat_name = data2["names"][1]["name"]
+    // let response = await fetch(api_base + "pokemon-species/" + id)
+    let data = await this.cargar_datos_pokemon_species(id)
+
+    let habitat_name
+    if (data["habitat"] != undefined) {
+      habitat_name = this.biomas[data["habitat"]["name"]]
+    } else {
+      habitat_name = "desconocido"
+    }
+
+    // let habitat = data["habitat"]["url"]
+    // let habitat_id = habitat.split("/")[6]
+    // let response2 = await fetch(api_base + "pokemon-habitat/" + habitat_id)
+    // let data2 = await response2.json();
+    // let habitat_name = data2["names"][1]["name"]
     return this.primeraAMayuscula(habitat_name)
   }
 
   async obtener_peso(id: Number) {
-    let response = await fetch(api_base + "pokemon/" + id)
-    let data = await response.json();
-    return data["weight"]
+    // let response = await fetch(api_base + "pokemon/" + id)
+    let data = await this.cargar_datos_pokemon(id)
+    return data!["weight"]
   }
 
   async obtener_tipos(id: Number) {
-    let response = await fetch(api_base + "pokemon/" + id);
-    let data = await response.json();
-
-    if (data["types"].length === 1) {
+    // let response = await fetch(api_base + "pokemon/" + id)
+    let data = await this.cargar_datos_pokemon(id)
+    if ((data["types"] as Array<String>).length === 1) {
       let tipo_url = data["types"][0]["type"]["url"];
       let response_tipo = await fetch(tipo_url);
       let data_tipo = await response_tipo.json();
@@ -97,21 +132,33 @@ export class PokemonService {
   }
 
   async obtener_forma(id: Number) {
-    let response = await fetch(api_base + "pokemon-species/" + id);
-    let data = await response.json();
+    // let response = await fetch(api_base + "pokemon-species/" + id)
+    let data = await this.cargar_datos_pokemon_species(id)
     return data["shape"]["name"];
   }
 
   async obtener_especie(id: Number) {
-    let response = await fetch(api_base + "pokemon-species/" + id);
-    let data = await response.json();
-    return data["genera"][5]["genus"];
+    // let response = await fetch(api_base + "pokemon-species/" + id)
+    let data = await this.cargar_datos_pokemon_species(id)
+    let dato
+    let i = 0
+    for (const lenguaje of [...data["genera"]]) {
+      if (lenguaje["language"]["name"] == "es") {
+        dato = lenguaje["genus"]
+        break
+      }
+      if (lenguaje["language"]["name"] == "en") {
+        dato = lenguaje["genus"]
+      }
+      i++
+    }
+    return dato
   }
 
   async obtener_altura(id: Number) {
-    let response = await fetch(api_base + "pokemon/" + id);
-    let data = await response.json();
-    return data["height"];
+    // let response = await fetch(api_base + "pokemon/" + id)
+    let data = await this.cargar_datos_pokemon(id)
+    return data!["height"];
   }
 
 
@@ -128,13 +175,11 @@ export class PokemonService {
   }
 
   async obtener_linea_evolutiva(nombre: string) {
-    console.log(0)
-    let response = await fetch("https://pokeapi.co/api/v2/pokemon-species/" + nombre)
-    let data = await response.json();
+    // let response = await fetch(api_base + "pokemon-species/" + id)
+    let data = await this.cargar_datos_pokemon_species(nombre)
     let url = data["evolution_chain"]["url"]
     let response2 = await fetch(url)
     let data2 = await response2.json();
-    console.log(1)
 
     let array = [[data2["chain"]["species"]["name"]]]; // Include the initial Pokemon
     let currentEvolutions = data2["chain"]["evolves_to"];
@@ -148,7 +193,6 @@ export class PokemonService {
       array.push(currentStage);
       currentEvolutions = nextEvolutions;
     }
-    console.log(array)
 
     // ya la api acepta tambien el nombre, no hace falta esta parte, ademas de que puedes conseguir la id, con la anterior llamada
     // // Convert each evolution stage to its corresponding id

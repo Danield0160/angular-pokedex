@@ -19,7 +19,7 @@ import { PokemonService } from './pokemon.service';
   imports: [
     BrowserModule
   ],
-  providers: [PokemonService],
+  providers: [PokemonService, PokedexComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

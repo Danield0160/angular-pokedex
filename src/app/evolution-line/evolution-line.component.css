@@ -1,5 +1,6 @@
 * {
   margin: 0;
+
 }
 
 #titulo {
@@ -14,13 +15,20 @@
 
 #container {
   width: 100%;
-  height: 180px;
+  height: auto;
   background-color: #183153;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
   margin-top: 10px;
   border-radius: 5px;
+  vertical-align: bottom;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #container div {

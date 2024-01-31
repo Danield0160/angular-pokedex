@@ -1,8 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-body{
-  overflow-y: hidden;
+/* body{
+  /* overflow-y: hidden; */
   /* min-width: 1100px; */
-}
+/* } */
+
 .col{
   height: 100vh;
 }

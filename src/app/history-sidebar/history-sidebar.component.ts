@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { HistorySidebarService } from './history-sidebar.service';
-import { ViewEncapsulation } from '@angular/core';
+import { PokedexComponent } from '../pokedex/pokedex.component';
+import { SearchSidebarComponent } from '../search-sidebar/search-sidebar.component';
+// import { ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-history-sidebar',
@@ -16,7 +18,7 @@ export class HistorySidebarComponent {
     return this.historySidebarService.taghistory;
   }
 
-
+  //haciendo uso del SearchSidebarComponent hacer que al clicar en un tag del historial se muestreen la pokedex
 
   deleteTags(): void {
     //en el button de html se llama a esta funcion
@@ -24,3 +26,4 @@ export class HistorySidebarComponent {
   }
 
 }
+

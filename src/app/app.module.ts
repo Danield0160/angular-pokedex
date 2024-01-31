@@ -22,4 +22,5 @@ import { PokemonService } from './pokemon.service';
   providers: [PokemonService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

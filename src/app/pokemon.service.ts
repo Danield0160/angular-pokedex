@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 let api_all_pokemon = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1025";
-let api_base= "https://pokeapi.co/api/v2/"
+let api_base = "https://pokeapi.co/api/v2/"
 
 
 @Injectable({
@@ -10,134 +10,154 @@ let api_base= "https://pokeapi.co/api/v2/"
 
 export class PokemonService {
 
-  private listado_pokemon:any = [];
+  private listado_pokemon: any = [];
 
-  constructor(){
+  constructor() {
     this.__cargar()
   }
 
-  async __cargar(){
-    if (this.listado_pokemon.length > 0){
+  async __cargar() {
+    if (this.listado_pokemon.length > 0) {
+      console.log("ya cargado")
       return
     }
     let response = await fetch(api_all_pokemon);
     let data = await response.json();
     this.listado_pokemon = data.results;
+    console.log("no estaba cargado")
   }
   //https://pokeapi.co/api/v2/pokemon-species/{nombre-del-pokémon}
 
 
-  async _obtener_todo(){
+  async _obtener_todo() {
     await this.__cargar()
     return this.listado_pokemon
   }
 
-  obtener_coincidencias_por_nombre(nombre:string){  }
+  obtener_coincidencias_por_nombre(nombre: string) { }
 
-  async obtener_sprite(id:Number){
-    let response = await fetch(api_base+"pokemon/"+id)
+  async obtener_sprite(id: Number) {
+    let response = await fetch(api_base + "pokemon/" + id)
     let data = await response.json();
     return data["sprites"]["front_default"]
   }
-  async obtener_nombre(id:Number){
-    let response = await fetch(api_base+"pokemon/"+id)
+
+  async obtener_nombre(id: Number) {
+    let response = await fetch(api_base + "pokemon/" + id)
     let data = await response.json();
-    // console.log(data["name"])
-    return data["name"]
+    return this.primeraAMayuscula(data["name"])
   }
 
-  obtener_descripcion(id:number){  }
-
-  obtener_habitat(id:number){  }
-
-  obtener_tipos(id:number){  }
-
-  async obtener_altura(){
-    let response = await fetch(api_base+"pokemon/"+"ditto")
+  async obtener_habitat(id: Number) {
+    let response = await fetch(api_base + "pokemon-species/" + id)
     let data = await response.json();
-    // console.log(data["species"])
-    return data["species"];
+    let habitat = data["habitat"]["url"]
+    let habitat_id = habitat.split("/")[6]
+    let response2 = await fetch(api_base + "pokemon-habitat/" + habitat_id)
+    let data2 = await response2.json();
+    let habitat_name = data2["names"][1]["name"]
+    return this.primeraAMayuscula(habitat_name)
+  }
+
+  async obtener_peso(id: Number) {
+    let response = await fetch(api_base + "pokemon/" + id)
+    let data = await response.json();
+    return data["weight"]
+  }
+
+  async obtener_tipos(id: Number) {
+    let response = await fetch(api_base + "pokemon/" + id);
+    let data = await response.json();
+
+    if (data["types"].length === 1) {
+      let tipo_url = data["types"][0]["type"]["url"];
+      let response_tipo = await fetch(tipo_url);
+      let data_tipo = await response_tipo.json();
+      let tipo = data_tipo["names"][5]["name"];
+      return this.primeraAMayuscula(tipo);
+
+    } else {
+
+      let tipo_1_url = data["types"][0]["type"]["url"];
+      let tipo_2_url = data["types"][1]["type"]["url"];
+
+      let response_tipo_1 = await fetch(tipo_1_url);
+      let response_tipo_2 = await fetch(tipo_2_url);
+
+      let data_tipo_1 = await response_tipo_1.json();
+      let data_tipo_2 = await response_tipo_2.json();
+
+      let tipo_1 = data_tipo_1["names"][5]["name"];
+      let tipo_2 = data_tipo_2["names"][5]["name"];
+
+      return this.primeraAMayuscula(tipo_1) + " / " + this.primeraAMayuscula(tipo_2);
+    }
+  }
+
+  primeraAMayuscula(string: string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  async obtener_forma(id: Number) {
+    let response = await fetch(api_base + "pokemon-species/" + id);
+    let data = await response.json();
+    return data["shape"]["name"];
+  }
+
+  async obtener_especie(id: Number) {
+    let response = await fetch(api_base + "pokemon-species/" + id);
+    let data = await response.json();
+    return data["genera"][5]["genus"];
+  }
+
+  async obtener_altura(id: Number) {
+    let response = await fetch(api_base + "pokemon/" + id);
+    let data = await response.json();
+    return data["height"];
   }
 
 
-  async obtener_ids(array_values:any){
+  async obtener_ids(array_values: any) {
 
     const array_ids = []
     for (let i = 0; i < array_values.length; i++) {
-      let response = await fetch(api_base+"pokemon/"+array_values[i])
+      let response = await fetch(api_base + "pokemon/" + array_values[i])
       let data = await response.json();
       array_ids.push(data["id"])
     }
 
     return array_ids
   }
-  async obtener_linea_evolutiva(nombre:string){
-    let array = []
-    let tiene_primera_evolucion = await this.comprobar_si_tiene_primera_evolucion(nombre)
 
-    if (tiene_primera_evolucion || array.push(nombre)) {
-      let response = await fetch(api_base+"pokemon-species/"+nombre)
-      let data = await response.json();
-      let url = data["evolution_chain"]["url"]
-      let response2 = await fetch(url)
-      let data2 = await response2.json();
-
-      if (tiene_primera_evolucion) {
-        let preevolucion = data2["chain"]["species"]["name"]
-        array.push(preevolucion)
-      }
-
-      let tiene_segunda_evolucion = await this.comprobar_si_tiene_segunda_evolucion(nombre)
-
-      if (tiene_segunda_evolucion) {
-        let segunda_evolucion = data2["chain"]["evolves_to"][0]["species"]["name"]
-        array.push(segunda_evolucion)
-
-        let tiene_tercera_evolucion = await this.comprobar_si_tiene_tercera_volucion(nombre)
-
-        if (tiene_tercera_evolucion) {
-          let tercera_evolucion = data2["chain"]["evolves_to"][0]["evolves_to"][0]["species"]["name"]
-          array.push(tercera_evolucion)
-        }
-      }
-    }
-
-    return this.obtener_ids(array)
-  }
-  async comprobar_si_tiene_primera_evolucion(nombre:string){
-    let response = await fetch(api_base+"pokemon/"+nombre)
-    let data = await response.json();
-    var nombre_pokemon = data["name"]
-    let response2 = await fetch(api_base+"pokemon-species/"+nombre_pokemon)
-    let data2 = await response2.json();
-    if (data2["evolves_from_species"] == null){
-      return false
-    }
-    return true
-  }
-
-  async comprobar_si_tiene_segunda_evolucion(nombre:string){
-    let response = await fetch(api_base+"pokemon-species/"+nombre)
+  async obtener_linea_evolutiva(nombre: string) {
+    let response = await fetch("https://pokeapi.co/api/v2/pokemon-species/" + nombre)
     let data = await response.json();
     let url = data["evolution_chain"]["url"]
     let response2 = await fetch(url)
     let data2 = await response2.json();
-    if (data2["chain"]["evolves_to"].length == 0){
-      return false
+
+    let array = [[data2["chain"]["species"]["name"]]]; // Include the initial Pokemon
+
+    let currentEvolutions = data2["chain"]["evolves_to"];
+    while (currentEvolutions.length > 0) {
+      let nextEvolutions = [];
+      let currentStage = [];
+      for (let evolution of currentEvolutions) {
+        currentStage.push(evolution["species"]["name"]);
+        nextEvolutions.push(...evolution["evolves_to"]);
+      }
+      array.push(currentStage);
+      currentEvolutions = nextEvolutions;
     }
-    return true
+
+    // Convert each evolution stage to its corresponding id
+    for (let i = 0; i < array.length; i++) {
+      array[i] = await this.obtener_ids(array[i]);
+    }
+
+    return array;
   }
 
-  async comprobar_si_tiene_tercera_volucion(nombre:string){
-    let response = await fetch(api_base+"pokemon-species/"+nombre)
-    let data = await response.json();
-    let url = data["evolution_chain"]["url"]
-    let response2 = await fetch(url)
-    let data2 = await response2.json();
-    if (data2["chain"]["evolves_to"][0]["evolves_to"].length == 0){
-      return false
-    }
-    return true
-  }
+
 }
 

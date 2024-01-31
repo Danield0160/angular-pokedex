@@ -70,6 +70,7 @@ export class SearchSidebarComponent {
     this.pokedexComponent.poner(entrada);
     this.reset()
   }
+
   async busqueda(event: Event) {
     let hijos = document.getElementById("pokedex_list")!.children
     Array.from(hijos).forEach(element => {
@@ -81,6 +82,7 @@ export class SearchSidebarComponent {
       }
     });
   }
+
   reset(){
     let hijos = document.getElementById("pokedex_list")!.children
     Array.from(hijos).forEach(element => {
@@ -88,3 +90,5 @@ export class SearchSidebarComponent {
     });
   }
 }
+
+

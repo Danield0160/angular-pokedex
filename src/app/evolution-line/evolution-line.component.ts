@@ -14,8 +14,7 @@ export class EvolutionLineComponent {
 
   obtener_linea(nombre: string) {
     this.pokemonService.obtener_linea_evolutiva(nombre).then((data) => {
-      console.log(data);
-
+      // console.log(data);
       const container = document.getElementById('container');
       if (!container) return;
 

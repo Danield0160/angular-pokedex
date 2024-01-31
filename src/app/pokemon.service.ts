@@ -11,26 +11,24 @@ let api_base = "https://pokeapi.co/api/v2/"
 export class PokemonService {
 
   private listado_pokemon: any = [];
-
+  private cargado;
   constructor() {
-    this.__cargar()
+    this.cargado = this.__cargar()
   }
 
   async __cargar() {
     if (this.listado_pokemon.length > 0) {
-      console.log("ya cargado")
       return
     }
     let response = await fetch(api_all_pokemon);
     let data = await response.json();
     this.listado_pokemon = data.results;
-    console.log("no estaba cargado")
   }
   //https://pokeapi.co/api/v2/pokemon-species/{nombre-del-pokémon}
 
 
   async _obtener_todo() {
-    await this.__cargar()
+    await this.cargado
     return this.listado_pokemon
   }
 
@@ -130,14 +128,15 @@ export class PokemonService {
   }
 
   async obtener_linea_evolutiva(nombre: string) {
+    console.log(0)
     let response = await fetch("https://pokeapi.co/api/v2/pokemon-species/" + nombre)
     let data = await response.json();
     let url = data["evolution_chain"]["url"]
     let response2 = await fetch(url)
     let data2 = await response2.json();
+    console.log(1)
 
     let array = [[data2["chain"]["species"]["name"]]]; // Include the initial Pokemon
-
     let currentEvolutions = data2["chain"]["evolves_to"];
     while (currentEvolutions.length > 0) {
       let nextEvolutions = [];
@@ -149,11 +148,13 @@ export class PokemonService {
       array.push(currentStage);
       currentEvolutions = nextEvolutions;
     }
+    console.log(array)
 
-    // Convert each evolution stage to its corresponding id
-    for (let i = 0; i < array.length; i++) {
-      array[i] = await this.obtener_ids(array[i]);
-    }
+    // ya la api acepta tambien el nombre, no hace falta esta parte, ademas de que puedes conseguir la id, con la anterior llamada
+    // // Convert each evolution stage to its corresponding id
+    // for (let i = 0; i < array.length; i++) {
+    //   array[i] = await this.obtener_ids(array[i]);
+    // }
 
     return array;
   }

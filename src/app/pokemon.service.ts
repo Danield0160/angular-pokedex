@@ -41,22 +41,43 @@ export class PokemonService {
 
   async cargar_datos_pokemon(id: any) {
     if (!this.pokemon[String(id)]) {
-      this.pokemon[String(id)] = fetch(api_base + "pokemon/" + id)
-      let temp = await this.pokemon[String(id)]
-      this.pokemon[String(id)] = await temp.json()
+      let response = fetch(api_base + "pokemon/" + id)
+      let pokemonData = (await response).json()
+      this.pokemon[String(id)] = pokemonData
     }
     return await this.pokemon[String(id)]
   }
+  //? hacer que sea una lista con el primer elemento una promesa?
   async cargar_datos_pokemon_species(id: any) {
     if (!this.pokemon_species[String(id)]) {
-      this.pokemon_species[String(id)] = await fetch(api_base + "pokemon-species/" + id)
-      let temp = this.pokemon_species[String(id)]
-      this.pokemon_species[String(id)] = await temp.json()
+      let response = fetch(api_base + "pokemon-species/" + id)
+      let pokemonData = (await response).json()
+      this.pokemon_species[String(id)] = pokemonData
     }
     // console.log(await this.pokemon_species[String(id)])
     return await this.pokemon_species[String(id)]
   }
 
+  // private loadingLocks: { [key: string]: Promise<void> } = {};
+  // async cargar_datos_pokemon_species(id: any) {
+  //   if (!this.pokemon_species[String(id)]) {
+  //     // Verificar si ya hay una solicitud en curso para este id
+  //     if (!this.loadingLocks[String(id)]) {
+  //       // Crear una promesa para bloquear futuras solicitudes mientras esta se está realizando
+  //       this.loadingLocks[String(id)] = new Promise(async (resolve) => {
+  //         let response = await fetch(api_base + "pokemon-species/" + id);
+  //         let pokemonData = await response.json();
+  //         this.pokemon_species[String(id)] = pokemonData;
+  //         // Liberar el bloqueo cuando la solicitud se completa
+  //         delete this.loadingLocks[String(id)];
+  //         resolve();
+  //       });
+  //     }
+  //     // Esperar hasta que la solicitud anterior se complete antes de continuar
+  //     await this.loadingLocks[String(id)];
+  //   }
+  //   return this.pokemon_species[String(id)];
+  // }
 
 
 

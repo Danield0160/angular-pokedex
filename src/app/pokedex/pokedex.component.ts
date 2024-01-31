@@ -8,7 +8,7 @@ import { PokemonService } from '../pokemon.service';
 })
 export class PokedexComponent {
   constructor(private pokemonService: PokemonService) {
-    // this.poner(1)
+    this.poner(1)
   }
 
   poner(id: any) {

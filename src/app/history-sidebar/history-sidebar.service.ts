@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { PokemonService } from '../pokemon.service';
+import { PokedexComponent } from '../pokedex/pokedex.component';
+// import { EvolutionLineComponent } from '../evolution-line/evolution-line.component';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +10,7 @@ export class HistorySidebarService {
 
   private _taghistory: string[] = [];
 
-  constructor() { }
+  constructor(private pokedex:PokedexComponent) { }
 
   get taghistory(): string[] {
     return[...this._taghistory];
@@ -34,5 +37,10 @@ export class HistorySidebarService {
 
   deleteTags(): void {
     this._taghistory = [];
+  }
+
+  recuperarTag(tag:any): void{
+    this.pokedex.poner(tag);
+    // this.linea.obtener_linea(tag);
   }
 }

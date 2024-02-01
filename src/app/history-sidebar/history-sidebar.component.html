@@ -6,7 +6,7 @@
   </div>
   <hr>
   <div class="list-group list-reset">
-    <div *ngFor="let tag of tags" class="list-group-item list-group-item-action" (click)="deleteTags()">
+    <div *ngFor="let tag of tags" class="list-group-item list-group-item-action" (click)="recuperarTag($event)">
       <!-- lista de búsquedas realizadas -->
       {{tag | titlecase}}
     </div>

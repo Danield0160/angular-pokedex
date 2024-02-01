@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
 import { PokemonService } from '../pokemon.service';
+import { HistorySidebarComponent } from '../history-sidebar/history-sidebar.component';
 
 
 @Component({
   selector: 'app-evolution-line',
   templateUrl: './evolution-line.component.html',
-  styleUrls: ['./evolution-line.component.css']
+  styleUrls: ['./evolution-line.component.css'],
+
 })
 export class EvolutionLineComponent {
-  constructor(private pokemonService:PokemonService) {
-
+  constructor(private pokemonService: PokemonService) {
+    this.obtener_linea("bulbasaur")
   }
 
   obtener_linea(nombre: string) {

@@ -19,9 +19,6 @@ export class PokedexComponent {
     this.poner_peso(id)
     this.poner_especie(id)
     this.poner_habitat(id)
-    /*
-    this.poner_descripcion(id)
-    */
     this.poner_id(id)
   }
 
@@ -84,39 +81,10 @@ export class PokedexComponent {
     respuesta.then((data) => document.getElementById("pokedex_habitat_pokemon")!.innerText = data)
   }
 
-  /*
-
-  poner_descripcion(id:Number){
-    let respuesta = this.pokemonService.obtener_descripcion(id)
-    respuesta.then((data)=> document.getElementById("pokedex_descripcion_pokemon")!.innerText = data)
-  }*/
-
   poner_id(id: Number) {
     function poner_texto(data: any) { document.getElementById("pokedex_id_pokemon")!.innerText = data };
     this.pokemonService.obtener_nombre(id).then((data) => poner_texto(id))
   }
-
-  /*
-poner_color(id:Number){
-  let respuesta = this.pokemonService.obtener_color(id)
-  respuesta.then((data)=> document.getElementById("pokedex_color_pokemon")!.innerText = data)
-}
-poner_forma(id:Number){
-  let respuesta = this.pokemonService.obtener_forma(id)
-  respuesta.then((data)=> document.getElementById("pokedex_forma_pokemon")!.innerText = data)
-}
-poner_habilidades(id:Number){
-  let respuesta = this.pokemonService.obtener_habilidades(id)
-  respuesta.then((data)=> document.getElementById("pokedex_habilidades_pokemon")!.innerText = data)
-}
-poner_movimientos(id:Number){
-  let respuesta = this.pokemonService.obtener_movimientos(id)
-  respuesta.then((data)=> document.getElementById("pokedex_movimientos_pokemon")!.innerText = data)
-}
-poner_estadisticas(id:Number){
-  let respuesta = this.pokemonService.obtener_estadisticas(id)
-  respuesta.then((data)=> document.getElementById("pokedex_estadisticas_pokemon")!.innerText = data)
-}*/
 
   poner_especie(id: Number) {
     let respuesta = this.pokemonService.obtener_especie(id)

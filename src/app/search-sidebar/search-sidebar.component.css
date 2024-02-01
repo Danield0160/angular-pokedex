@@ -90,13 +90,9 @@ font-weight: bold;
 
   #pokedex_list img{
     position: unset;
+    margin: auto;
   }
-
-
 }
-
-
-
 
 .search-sidebar_id_pokemon {
   background-color: #DC0A2D;

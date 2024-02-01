@@ -1,8 +1,7 @@
 <div id="sidebar_container" class="col">
-  <input class="form-control" list="pokedex_list" type="text" id="pokedex_search" placeholder="nombre o id" (keyup.enter)="searchTag($event)" (input)="busqueda($event)" #txtTagInput>
 
-  <div id="pokedex_list">
+  <input class="form-control" list="pokedex_list" type="text" id="pokedex_search" placeholder="Buscar..." (keyup.enter)="searchTag($event)" (input)="busqueda($event)" #txtTagInput>
 
-  </div>
+  <div id="pokedex_list"></div>
 
 </div>

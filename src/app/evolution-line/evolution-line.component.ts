@@ -11,7 +11,7 @@ import { HistorySidebarComponent } from '../history-sidebar/history-sidebar.comp
 })
 export class EvolutionLineComponent {
   constructor(private pokemonService: PokemonService) {
-    this.obtener_linea("bulbasaur")
+    this.obtener_linea("1")
   }
 
   obtener_linea(nombre: string) {
@@ -21,7 +21,6 @@ export class EvolutionLineComponent {
       if (!container) return;
 
       container.innerHTML = '';
-
       data.forEach((evolutionStage, columnIndex) => {
         if (!Array.isArray(evolutionStage)) {
           console.error('evolutionStage is not an array:', evolutionStage);
@@ -43,7 +42,6 @@ export class EvolutionLineComponent {
           newDiv.appendChild(newImg);
 
           columnDiv.appendChild(newDiv);
-
           this.pokemonService.obtener_sprite(item).then((sprite) => {
             newImg.setAttribute("src", sprite);
             newDiv.style.display = 'block';

@@ -37,47 +37,51 @@ export class PokemonService {
   }
 
 
-
-
+  //? Juntar ambas funciones de carga?
   async cargar_datos_pokemon(id: any) {
+    let esto = this
+    let promesa: Promise<any> = new Promise(function (resolve) {
+      let interval = setInterval(function () {
+        if (esto.pokemon[id] != undefined) {
+          clearInterval(interval)
+          resolve(esto.pokemon[id])
+        }
+      }, 50)
+    })
+
     if (!this.pokemon[String(id)]) {
-      let response = fetch(api_base + "pokemon/" + id)
-      let pokemonData = (await response).json()
-      this.pokemon[String(id)] = pokemonData
+      let funcion = async (id: any) => {
+        let response = fetch(api_base + "pokemon/" + id)
+        let pokemonData = (await response).json()
+        this.pokemon[String(id)] = pokemonData
+      }
+      funcion(id)
     }
-    return await this.pokemon[String(id)]
-  }
-  //? hacer que sea una lista con el primer elemento una promesa?
-  async cargar_datos_pokemon_species(id: any) {
-    if (!this.pokemon_species[String(id)]) {
-      let response = fetch(api_base + "pokemon-species/" + id)
-      let pokemonData = (await response).json()
-      this.pokemon_species[String(id)] = pokemonData
-    }
-    // console.log(await this.pokemon_species[String(id)])
-    return await this.pokemon_species[String(id)]
+    return promesa
   }
 
-  // private loadingLocks: { [key: string]: Promise<void> } = {};
-  // async cargar_datos_pokemon_species(id: any) {
-  //   if (!this.pokemon_species[String(id)]) {
-  //     // Verificar si ya hay una solicitud en curso para este id
-  //     if (!this.loadingLocks[String(id)]) {
-  //       // Crear una promesa para bloquear futuras solicitudes mientras esta se está realizando
-  //       this.loadingLocks[String(id)] = new Promise(async (resolve) => {
-  //         let response = await fetch(api_base + "pokemon-species/" + id);
-  //         let pokemonData = await response.json();
-  //         this.pokemon_species[String(id)] = pokemonData;
-  //         // Liberar el bloqueo cuando la solicitud se completa
-  //         delete this.loadingLocks[String(id)];
-  //         resolve();
-  //       });
-  //     }
-  //     // Esperar hasta que la solicitud anterior se complete antes de continuar
-  //     await this.loadingLocks[String(id)];
-  //   }
-  //   return this.pokemon_species[String(id)];
-  // }
+  async cargar_datos_pokemon_species(id: any) {
+    let esto = this
+    let promesa: Promise<any> = new Promise(function (resolve) {
+      let interval = setInterval(function () {
+        if (esto.pokemon_species[String(id)] != undefined) {
+          clearInterval(interval)
+          resolve(esto.pokemon_species[String(id)])
+        }
+      }, 50)
+    })
+
+    if (!this.pokemon_species[String(id)]) {
+      let funcion = async (id: any) => {
+        let response = fetch(api_base + "pokemon-species/" + id)
+        let pokemonData = (await response).json()
+        this.pokemon_species[String(id)] = pokemonData
+      }
+      funcion(id)
+    }
+    return promesa
+  }
+
 
 
 
@@ -202,19 +206,26 @@ export class PokemonService {
     let response2 = await fetch(url)
     let data2 = await response2.json();
 
-    let array = [[data2["chain"]["species"]["name"]]]; // Include the initial Pokemon
+    let id_poke = data2["chain"]["species"]["url"].split("/")
+    let poke = id_poke[id_poke.length - 2]
+
+    let array = [[poke]]; // Include the initial Pokemon
     let currentEvolutions = data2["chain"]["evolves_to"];
     while (currentEvolutions.length > 0) {
       let nextEvolutions = [];
       let currentStage = [];
       for (let evolution of currentEvolutions) {
-        currentStage.push(evolution["species"]["name"]);
+        // currentStage.push(evolution["species"]["name"]);
+
+        let url = evolution["species"]["url"].split("/")
+        let poke = url[url.length - 2]
+
+        currentStage.push(poke);
         nextEvolutions.push(...evolution["evolves_to"]);
       }
       array.push(currentStage);
       currentEvolutions = nextEvolutions;
     }
-
     // ya la api acepta tambien el nombre, no hace falta esta parte, ademas de que puedes conseguir la id, con la anterior llamada
     // // Convert each evolution stage to its corresponding id
     // for (let i = 0; i < array.length; i++) {

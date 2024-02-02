@@ -95,6 +95,7 @@
 }
 #pokedex_pokeicon img {
   width: 100%;
+  max-height: 15vh;
   border-radius: 10%;
   image-rendering: pixelated;
 }

@@ -30,16 +30,16 @@ export class SearchSidebarComponent {
 
   rellenar_listado(datos: any) {
     let listado = document.getElementById("pokedex_list")
-    let i = 0
     for (const pokemon of datos) {
-      i++
       let bloque = document.createElement("div")
       bloque.className = "pokemon"
-      bloque.setAttribute("pokeid", String(i))
+      let enlance = pokemon.url.split("/")
+      let id = enlance[enlance.length - 2]
+      bloque.setAttribute("pokeid", id)
 
       let seccion_izq = document.createElement("div")
       let imagen = document.createElement("img")
-      this.pokemonService.obtener_sprite(i).then((dato) => imagen.src = dato)
+      this.pokemonService.obtener_sprite(id).then((dato) => imagen.src = dato)
       seccion_izq.appendChild(imagen)
 
       let nombre = document.createElement("span")
@@ -47,7 +47,7 @@ export class SearchSidebarComponent {
       seccion_izq.appendChild(nombre)
 
       let seccion_der = document.createElement("div")
-      seccion_der.innerText = "Nº " + i
+      seccion_der.innerText = "Nº " + id
       seccion_der.className = "search-sidebar_id_pokemon"
       bloque.appendChild(seccion_der)
       listado?.appendChild(bloque)
@@ -83,10 +83,10 @@ export class SearchSidebarComponent {
     });
   }
 
-  reset(){
+  reset() {
     let hijos = document.getElementById("pokedex_list")!.children
     Array.from(hijos).forEach(element => {
-        (element as HTMLElement).style.display = "inline-block"
+      (element as HTMLElement).style.display = "inline-block"
     });
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-let api_all_pokemon = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1025";
+let api_all_pokemon = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1400";
 let api_base = "https://pokeapi.co/api/v2/"
 
 
@@ -13,6 +13,7 @@ export class PokemonService {
 
   public pokemon: any = {}
   private pokemon_species: any = {}
+  private DatosCargados = { pokemon: {}, pokemon_species: {} }
 
   constructor() {
     this.cargado = this.__cargar()
@@ -37,19 +38,20 @@ export class PokemonService {
   }
 
 
-  //? Juntar ambas funciones de carga?
+  //TODO: Juntar funciones de carga
   async cargar_datos_pokemon(id: any) {
     let esto = this
     let promesa: Promise<any> = new Promise(function (resolve) {
       let interval = setInterval(function () {
-        if (esto.pokemon[id] != undefined) {
+        if (![undefined, ""].includes(esto.pokemon[id])) {
           clearInterval(interval)
           resolve(esto.pokemon[id])
         }
-      }, 50)
+      }, 10)
     })
 
-    if (!this.pokemon[String(id)]) {
+    if (this.pokemon[String(id)] == undefined) {
+      this.pokemon[String(id)] = ""
       let funcion = async (id: any) => {
         let response = fetch(api_base + "pokemon/" + id)
         let pokemonData = (await response).json()
@@ -64,16 +66,17 @@ export class PokemonService {
     let esto = this
     let promesa: Promise<any> = new Promise(function (resolve) {
       let interval = setInterval(function () {
-        if (esto.pokemon_species[String(id)] != undefined) {
+        if (![undefined, ""].includes(esto.pokemon_species[String(id)])) {
           clearInterval(interval)
           resolve(esto.pokemon_species[String(id)])
         }
-      }, 50)
+      }, 10)
     })
 
-    if (!this.pokemon_species[String(id)]) {
+    if (this.pokemon_species[String(id)] == undefined) {
+      this.pokemon_species[String(id)] = ""
       let funcion = async (id: any) => {
-        let response = fetch(api_base + "pokemon-species/" + id)
+        let response = fetch((await this.cargar_datos_pokemon(id)).species.url)
         let pokemonData = (await response).json()
         this.pokemon_species[String(id)] = pokemonData
       }
@@ -89,7 +92,8 @@ export class PokemonService {
   async obtener_sprite(id: Number) {
     // let response = await fetch(api_base + "pokemon/" + id)
     let data = await this.cargar_datos_pokemon(id)
-    return data!["sprites"]["front_default"]
+    let imagen = data["sprites"]["front_default"] ? data["sprites"]["front_default"] : "https://wikiwandv2-19431.kxcdn.com/_next/image?url=https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/MissingNo.svg/langsimple-640px-MissingNo.svg.png&w=640&q=50"
+    return imagen
   }
 
   async obtener_nombre(id: Number) {
@@ -124,32 +128,20 @@ export class PokemonService {
     return data!["weight"]
   }
 
+  private tipos_traduccion: any = new Set()
   async obtener_tipos(id: Number) {
-    // let response = await fetch(api_base + "pokemon/" + id)
     let data = await this.cargar_datos_pokemon(id)
-    if ((data["types"] as Array<String>).length === 1) {
-      let tipo_url = data["types"][0]["type"]["url"];
-      let response_tipo = await fetch(tipo_url);
-      let data_tipo = await response_tipo.json();
-      let tipo = data_tipo["names"][5]["name"];
-      return this.primeraAMayuscula(tipo);
-
-    } else {
-
-      let tipo_1_url = data["types"][0]["type"]["url"];
-      let tipo_2_url = data["types"][1]["type"]["url"];
-
-      let response_tipo_1 = await fetch(tipo_1_url);
-      let response_tipo_2 = await fetch(tipo_2_url);
-
-      let data_tipo_1 = await response_tipo_1.json();
-      let data_tipo_2 = await response_tipo_2.json();
-
-      let tipo_1 = data_tipo_1["names"][5]["name"];
-      let tipo_2 = data_tipo_2["names"][5]["name"];
-
-      return this.primeraAMayuscula(tipo_1) + " / " + this.primeraAMayuscula(tipo_2);
+    let frase = ""
+    for (const listado of data["types"]) {
+      if (!this.tipos_traduccion[listado.type.name]) {
+        let response_tipo = await fetch(listado.type.url)
+        let datos = await response_tipo.json()
+        let tipo = datos["names"][5]["name"];
+        this.tipos_traduccion[listado.type.name] = tipo
+      }
+      frase += frase ? (" / " + this.tipos_traduccion[listado.type.name]) : (this.tipos_traduccion[listado.type.name])
     }
+    return frase
   }
 
   primeraAMayuscula(string: string) {

@@ -13,8 +13,8 @@ export class PokemonService {
 
   public pokemon: any = {}
   private pokemon_species: any = {}
-  private DatosCargados = { pokemon: {}, pokemon_species: {} }
-
+  private DatosCargados = { pokemon: {}, pokemon_species: {} } //TODO
+  private shiny: Array<String> = []
   constructor() {
     this.cargado = this.__cargar()
   }
@@ -40,6 +40,11 @@ export class PokemonService {
 
   //TODO: Juntar funciones de carga
   async cargar_datos_pokemon(id: any) {
+    if ((Math.random() * 100) < 1) {
+      this.shiny.push(String(id))
+      console.log(id)
+    }
+
     let esto = this
     let promesa: Promise<any> = new Promise(function (resolve) {
       let interval = setInterval(function () {
@@ -92,7 +97,12 @@ export class PokemonService {
   async obtener_sprite(id: Number) {
     // let response = await fetch(api_base + "pokemon/" + id)
     let data = await this.cargar_datos_pokemon(id)
-    let imagen = data["sprites"]["front_default"] ? data["sprites"]["front_default"] : "https://wikiwandv2-19431.kxcdn.com/_next/image?url=https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/MissingNo.svg/langsimple-640px-MissingNo.svg.png&w=640&q=50"
+    let imagen
+    if (this.shiny.includes(String(id))) {
+      imagen = data["sprites"]["front_shiny"] ? data["sprites"]["front_shiny"] : "https://wikiwandv2-19431.kxcdn.com/_next/image?url=https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/MissingNo.svg/langsimple-640px-MissingNo.svg.png&w=640&q=50"
+    } else {
+      imagen = data["sprites"]["front_default"] ? data["sprites"]["front_default"] : "https://wikiwandv2-19431.kxcdn.com/_next/image?url=https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/MissingNo.svg/langsimple-640px-MissingNo.svg.png&w=640&q=50"
+    }
     return imagen
   }
 
@@ -178,6 +188,26 @@ export class PokemonService {
     return data!["height"];
   }
 
+  async obtener_descripcion(id: Number) {
+    let data = await this.cargar_datos_pokemon_species(id);
+    let descripcion = '';
+    let description = '';
+
+    for (let entry of data["flavor_text_entries"]) {
+      if (entry["language"]["name"] == "es" && entry["version"]["name"] == "x") {
+        descripcion = entry["flavor_text"];
+      }
+      if (entry["language"]["name"] == "en" && entry["version"]["name"] == "x") {
+        description = entry["flavor_text"];
+      }
+    }
+
+    if (!descripcion) {
+      descripcion = description;
+    }
+
+    return descripcion;
+  }
 
   async obtener_ids(array_values: any) {
 

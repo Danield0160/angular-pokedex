@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { PokemonService } from '../pokemon.service';
 import { HistorySidebarComponent } from '../history-sidebar/history-sidebar.component';
-
+import { PokedexComponent } from '../pokedex/pokedex.component';
 
 @Component({
   selector: 'app-evolution-line',
@@ -10,7 +10,7 @@ import { HistorySidebarComponent } from '../history-sidebar/history-sidebar.comp
 
 })
 export class EvolutionLineComponent {
-  constructor(private pokemonService: PokemonService) {
+  constructor(private pokemonService: PokemonService, private pokedexComponent: PokedexComponent) {
     this.obtener_linea("1")
   }
 
@@ -37,6 +37,7 @@ export class EvolutionLineComponent {
           let newDiv = document.createElement('div');
           newDiv.id = `evolucion_${columnIndex}_${index}`;
           newDiv.style.display = 'none';
+          newDiv.onclick = (x) => { this.pokedexComponent.poner(item) }
 
           let newImg = document.createElement('img');
           newDiv.appendChild(newImg);

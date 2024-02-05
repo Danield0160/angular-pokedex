@@ -19,6 +19,7 @@ export class PokedexComponent {
     this.poner_peso(id)
     this.poner_especie(id)
     this.poner_habitat(id)
+    this.poner_descripcion(id)
     this.poner_id(id)
   }
 
@@ -89,6 +90,11 @@ export class PokedexComponent {
   poner_especie(id: Number) {
     let respuesta = this.pokemonService.obtener_especie(id)
     respuesta.then((data) => document.getElementById("pokedex_especie_pokemon")!.innerText = data)
+  }
+
+  poner_descripcion(id: Number) {
+    let respuesta = this.pokemonService.obtener_descripcion(id)
+    respuesta.then((data) => document.getElementById("pokedex_descripcion_pokemon")!.innerText = data)
   }
 }
 

@@ -38,7 +38,6 @@ export class PokemonService {
   }
 
 
-  //TODO: Juntar funciones de carga
   async cargar_datos_pokemon(id: any) {
     if ((Math.random() * 100) < 1) {
       this.shiny.push(String(id))
@@ -92,7 +91,11 @@ export class PokemonService {
 
 
 
-
+  async obtener_id(nombre: String) {
+    let response = fetch(api_base + "pokemon/" + nombre)
+    let pokemonData: any = await (await response).json()
+    return pokemonData["id"]
+  }
 
   async obtener_sprite(id: Number) {
     // let response = await fetch(api_base + "pokemon/" + id)

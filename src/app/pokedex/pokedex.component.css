@@ -21,9 +21,9 @@
 #pokedex_left_side {
   background-image: url(../../pokedex-inside.jpg);
   background-size: 100% 100%;
-  transform: rotateY(0deg);
+  transform: rotateY(179deg);
   transform-origin: right;
-  transition: all 5s linear;
+  transition: all 3s linear;
   /* border-radius: 1em; */
   /*
   border-top-left-radius: 15%;
@@ -65,8 +65,7 @@
 
 
 #pokedex_container:hover #pokedex_left_side {
-  transform: rotateY(179deg);
-  transition: all 5s linear;
+  transition: all 3s linear;
 }
 .pokedex_sides {
   display: inline-block;
@@ -122,4 +121,8 @@
   color: white;
   text-align: center;
   background-color: rgb(2, 2, 78);
+  padding: 5px;
+}
+.no_centrado{
+  text-align: left;
 }

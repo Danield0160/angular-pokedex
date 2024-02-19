@@ -4,7 +4,8 @@ import { PokemonService } from '../pokemon.service';
 @Component({
   selector: 'app-pokedex',
   templateUrl: './pokedex.component.html',
-  styleUrls: ['./pokedex.component.css']
+  styleUrls: ['./pokedex.component.css'],
+
 })
 export class PokedexComponent {
   constructor(private pokemonService: PokemonService) {
@@ -98,3 +99,6 @@ export class PokedexComponent {
   }
 }
 
+setTimeout(() => {
+  document.getElementById("pokedex_left_side")!.style.transform = "rotateY(0deg)"
+}, 1500)

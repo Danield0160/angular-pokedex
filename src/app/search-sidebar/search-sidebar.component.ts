@@ -53,18 +53,19 @@ export class SearchSidebarComponent {
       listado?.appendChild(bloque)
       bloque.appendChild(seccion_izq)
 
-      bloque.onclick = (e: Event) => {
+      bloque.onclick = async (e: Event) => {
         let identification = (e.target! as HTMLTextAreaElement).getAttribute("pokeid")
         this.pokedexComponent.poner(identification)
+        this.historySidebarService.searchTag( await this.pokemonService.obtener_nombre(Number(identification)));
         this.evolutionLineComponent.obtener_linea(String(identification));
       }
 
     }
   }
 
-  searchTag(event: Event) {
+  async searchTag(event: Event) {
     let entrada = (event.target as HTMLTextAreaElement).value.toLowerCase();
-    this.historySidebarService.searchTag(entrada);
+    this.historySidebarService.searchTag( await this.pokemonService.obtener_nombre(Number(entrada)));
     this.evolutionLineComponent.obtener_linea(entrada);
     (event.target as HTMLTextAreaElement).value = "";
     this.pokedexComponent.poner(entrada);

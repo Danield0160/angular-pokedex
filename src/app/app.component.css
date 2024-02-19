@@ -16,3 +16,7 @@ app-evolution-{
   height: 100%;
   vertical-align: bottom;
 }
+body{
+  background-image: url(		https://pokedle.net/img/Background.b373eb68.png);
+  background-size: cover;
+}

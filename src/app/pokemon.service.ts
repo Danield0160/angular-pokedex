@@ -13,7 +13,6 @@ export class PokemonService {
 
   public pokemon: any = {}
   private pokemon_species: any = {}
-  private DatosCargados = { pokemon: {}, pokemon_species: {} } //TODO
   private shiny: Array<String> = []
   constructor() {
     this.cargado = this.__cargar()
